@@ -6,23 +6,92 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Teste: Que tipo de líder você é?</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: auto; }
-    h1, h2 { color: #2c3e50; }
-    label { display: block; margin: 10px 0; }
-    button { padding: 10px 15px; margin-top: 20px; background: #3498db; color: white; border: none; cursor: pointer; }
-    button:hover { background: #2980b9; }
-    .resultado { margin-top: 30px; padding: 20px; border: 1px solid #ccc; background: #f9f9f9; }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f6f8;
+      color: #2c3e50;
+    }
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    label {
+      display: block;
+      margin: 12px 0;
+      padding: 10px;
+      background-color: #ecf0f1;
+      border-radius: 6px;
+    }
+    input[type="radio"] {
+      margin-right: 10px;
+    }
+    button {
+      padding: 12px 20px;
+      margin-top: 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    .resultado {
+      margin-top: 30px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+      border-radius: 6px;
+    }
+    @media (max-width: 600px) {
+      header {
+        font-size: 1.2rem;
+        padding: 15px;
+      }
+      main {
+        padding: 15px;
+      }
+      button {
+        font-size: 0.95rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>Teste: Que tipo de líder você é?</h1>
-  <form id="quizForm">
-    <p>Responda "Sim" ou "Não" para cada pergunta:</p>
-    <div id="perguntas"></div>
-    <button type="submit">Ver resultado</button>
-  </form>
+  <header>
+    Teste Interativo - Que tipo de líder você é?
+  </header>
+  <main>
+    <form id="quizForm">
+      <p>Responda "Sim" ou "Não" para cada pergunta:</p>
+      <div id="perguntas"></div>
+      <button type="submit">Ver resultado</button>
+    </form>
 
-  <div class="resultado" id="resultado"></div>
+    <div class="resultado" id="resultado"></div>
+  </main>
 
   <script>
     const perguntas = [
@@ -81,17 +150,17 @@
       const max = Math.max(scores.autocratico, scores.democratico, scores.laissez);
 
       if (scores.autocratico === max && scores.autocratico > 0) {
-        resultadoTexto += `<strong>Liderança Autocrática:</strong> Você tende a liderar de forma mais autoritária, centralizando decisões e controle.`;
+        resultadoTexto += `<strong>Liderança Autocrática:</strong> Você tende a liderar de forma mais autoritária, centralizando decisões e controle.<br><br>`;
       }
       if (scores.democratico === max && scores.democratico > 0) {
-        resultadoTexto += `<strong>Liderança Democrática:</strong> Você lidera ouvindo o grupo e incentivando a participação nas decisões.`;
+        resultadoTexto += `<strong>Liderança Democrática:</strong> Você lidera ouvindo o grupo e incentivando a participação nas decisões.<br><br>`;
       }
       if (scores.laissez === max && scores.laissez > 0) {
-        resultadoTexto += `<strong>Liderança Liberal (laissez-faire):</strong> Você tende a deixar o grupo agir de forma independente, com pouca intervenção direta.`;
+        resultadoTexto += `<strong>Liderança Liberal (laissez-faire):</strong> Você tende a deixar o grupo agir de forma independente, com pouca intervenção direta.<br><br>`;
       }
 
       if ((Object.values(scores).filter(v => v === max).length) > 1) {
-        resultadoTexto += "<br><em>Você é um líder híbrido! Apresenta características de múltiplos estilos, adaptando-se conforme a situação.</em>";
+        resultadoTexto += "<em>Você é um líder híbrido! Apresenta características de múltiplos estilos, adaptando-se conforme a situação.</em>";
       }
 
       document.getElementById('resultado').innerHTML = resultadoTexto;
