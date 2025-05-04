@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teste: Que tipo de líder você é?</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: auto; }
+    h1, h2 { color: #2c3e50; }
+    label { display: block; margin: 10px 0; }
+    button { padding: 10px 15px; margin-top: 20px; background: #3498db; color: white; border: none; cursor: pointer; }
+    button:hover { background: #2980b9; }
+    .resultado { margin-top: 30px; padding: 20px; border: 1px solid #ccc; background: #f9f9f9; }
+  </style>
+</head>
+<body>
+  <h1>Teste: Que tipo de líder você é?</h1>
+  <form id="quizForm">
+    <p>Responda "Sim" ou "Não" para cada pergunta:</p>
+    <div id="perguntas"></div>
+    <button type="submit">Ver resultado</button>
+  </form>
+
+  <div class="resultado" id="resultado"></div>
+
+  <script>
+    const perguntas = [
+      "Você gosta de 'dirigir'?",
+      "Você acha que vale a pena explicar suas decisões antes de agir?",
+      "Você prefere planejamento ao contato direto com subordinados?",
+      "Você perguntaria o nome de um novo funcionário antes de dizer o seu?",
+      "Você mantém seu time informado sobre o que afeta o grupo?",
+      "Você determina os objetivos, mas deixa o método para os subordinados?",
+      "Você acha que o líder deve manter certa distância do time?",
+      "Você votaria com o grupo mesmo achando que sua ideia é melhor?",
+      "Você prefere uma equipe autônoma, com pouco contato?",
+      "Você acha fácil demitir alguém?",
+      "Você acredita que ser amigo da equipe facilita a liderança?",
+      "Você se sentiria apenas frustrado se um assistente falhasse?",
+      "Você acha que deve punir sempre que regras são quebradas?",
+      "Você deixa claro que sua decisão deve ser acatada como chefe?",
+      "Você deixa que subordinados decidam o que comunicar?",
+      "Você acha que a equipe deve ter lealdade pessoal com você?",
+      "Você prefere resolver problemas em equipe?",
+      "Você acha que opiniões divergentes trazem boas soluções?"
+    ];
+
+    const categorias = {
+      autocratico: [1, 4, 7, 10, 13, 16],
+      democratico: [2, 5, 8, 11, 14, 17],
+      laissez: [3, 6, 9, 12, 15, 18]
+    };
+
+    const container = document.getElementById('perguntas');
+
+    perguntas.forEach((p, i) => {
+      container.innerHTML += `
+        <label>
+          ${i + 1}. ${p}<br>
+          <input type="radio" name="q${i + 1}" value="sim" required> Sim
+          <input type="radio" name="q${i + 1}" value="nao"> Não
+        </label>
+      `;
+    });
+
+    document.getElementById('quizForm').onsubmit = function (e) {
+      e.preventDefault();
+      const data = new FormData(e.target);
+      let scores = { autocratico: 0, democratico: 0, laissez: 0 };
+
+      for (let estilo in categorias) {
+        categorias[estilo].forEach(n => {
+          if (data.get(`q${n}`) === 'sim') {
+            scores[estilo]++;
+          }
+        });
+      }
+
+      let resultadoTexto = '';
+      const max = Math.max(scores.autocratico, scores.democratico, scores.laissez);
+
+      if (scores.autocratico === max && scores.autocratico > 0) {
+        resultadoTexto += `<strong>Liderança Autocrática:</strong> Você tende a liderar de forma mais autoritária, centralizando decisões e controle.`;
+      }
+      if (scores.democratico === max && scores.democratico > 0) {
+        resultadoTexto += `<strong>Liderança Democrática:</strong> Você lidera ouvindo o grupo e incentivando a participação nas decisões.`;
+      }
+      if (scores.laissez === max && scores.laissez > 0) {
+        resultadoTexto += `<strong>Liderança Liberal (laissez-faire):</strong> Você tende a deixar o grupo agir de forma independente, com pouca intervenção direta.`;
+      }
+
+      if ((Object.values(scores).filter(v => v === max).length) > 1) {
+        resultadoTexto += "<br><em>Você é um líder híbrido! Apresenta características de múltiplos estilos, adaptando-se conforme a situação.</em>";
+      }
+
+      document.getElementById('resultado').innerHTML = resultadoTexto;
+    };
+  </script>
+</body>
+</html>
